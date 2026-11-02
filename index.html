@@ -1803,6 +1803,209 @@
     [data-theme="light"] body:not(.detail-open) .nav-links a{color:#2f5772!important}
     [data-theme="light"] body:not(.detail-open) .nav-links a:hover{color:#12283c!important}
     [data-theme="light"] body:not(.detail-open) .brand{color:#12283c!important}
+
+    /* ===== SINGLE-PAGE FLOW ===== */
+    html{scroll-behavior:smooth}
+    .chapters{position:relative;z-index:5}
+    .detail-page.chapter{display:block!important;min-height:0;padding:70px 0 90px;position:relative;overflow:hidden;animation:none}
+    .detail-page.chapter + .detail-page.chapter{border-top:1px solid #1d1d1d}
+    .detail-page.chapter:before{
+      content:attr(data-num);position:absolute;right:-1vw;top:10px;z-index:0;pointer-events:none;
+      font:800 clamp(180px,30vw,430px)/.8 'Plus Jakarta Sans',sans-serif;letter-spacing:-.06em;
+      color:transparent;-webkit-text-stroke:1.5px rgba(255,115,0,.22);
+      transform:translateY(calc(var(--par,0) * 1px));
+    }
+    .detail-page.chapter > .wrap{position:relative;z-index:1}
+    .chapter-bar{display:flex;align-items:center;gap:16px;margin:0 0 46px;position:sticky;top:78px;z-index:20;padding:10px 0;font:800 11px 'Plus Jakarta Sans',sans-serif;letter-spacing:.2em;text-transform:uppercase;background:linear-gradient(#080808 55%,transparent)}
+    .chapter-bar > span{white-space:nowrap}
+    .chapter-num{padding:6px 11px;border-radius:99px;background:#ff7300;color:#080808!important}
+    .chapter-name{font-size:13px;letter-spacing:.14em}
+    .chapter-tag{color:#8d8d8d!important;font-weight:600}
+    .chapter-line{flex:1;height:1px;background:linear-gradient(90deg,#ff7300,transparent)}
+    [data-theme="light"] .chapter-bar{background:linear-gradient(#e8f4fb 55%,transparent)}
+    [data-theme="light"] .detail-page .chapter-num{color:#fff!important}
+    [data-theme="light"] .detail-page .chapter-tag{color:#5a7f96!important}
+
+    .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+    .reveal.in{opacity:1;transform:none}
+
+    .work-ticker{overflow:hidden;margin:56px -24px 0;border-block:1px solid rgba(255,115,0,.45);padding:22px 0;background:rgba(8,8,8,.55);backdrop-filter:blur(6px)}
+    .work-ticker-track{display:flex;gap:34px;width:max-content;animation:tick 28s linear infinite;align-items:center}
+    .work-ticker span{font:800 clamp(34px,6vw,84px)/1 'Plus Jakarta Sans',sans-serif;letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1.5px #f1f1ec;white-space:nowrap}
+    .work-ticker span:nth-of-type(odd){color:#f1f1ec;-webkit-text-stroke:0}
+    .work-ticker i{color:#ff7300;font-style:normal;font-size:30px}
+    [data-theme="light"] .work-ticker{background:rgba(245,251,255,.7)}
+    [data-theme="light"] .work-ticker span{-webkit-text-stroke-color:#12283c}
+    [data-theme="light"] .work-ticker span:nth-of-type(odd){color:#12283c}
+    @keyframes tick{to{transform:translateX(-50%)}}
+    .scroll-note{text-align:center;margin-top:26px;font:700 12px 'Plus Jakarta Sans',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#777}
+    .scroll-note b{display:inline-block;color:#ff7300;animation:bob 1.4s ease-in-out infinite}
+    @keyframes bob{50%{transform:translateY(6px)}}
+    [data-theme="light"] .scroll-note{color:#2f5772}
+
+    .scroll-progress{position:fixed;left:0;top:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#ff7300,#ffb36b);z-index:200}
+    .chapter-rail{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:14px;opacity:0;pointer-events:none;transition:opacity .3s}
+    .chapter-rail.show{opacity:1;pointer-events:auto}
+    .chapter-rail a{display:flex;align-items:center;justify-content:flex-end;gap:10px;text-decoration:none;font:800 10px 'Plus Jakarta Sans',sans-serif;letter-spacing:.14em;color:#8d8d8d}
+    .chapter-rail a span{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid #3a3a3a;background:#101010;transition:.25s}
+    .chapter-rail a em{font-style:normal;text-transform:uppercase;opacity:0;transform:translateX(8px);transition:.25s;background:#101010;padding:5px 9px;border-radius:99px}
+    .chapter-rail a:hover em,.chapter-rail a.on em{opacity:1;transform:none}
+    .chapter-rail a.on span{background:#ff7300;border-color:#ff7300;color:#080808;transform:scale(1.15)}
+    [data-theme="light"] .chapter-rail a span,[data-theme="light"] .chapter-rail a em{background:#f5fbff;border-color:#a9d4ef;color:#12283c}
+    [data-theme="light"] .chapter-rail a.on span{background:#ff7300;color:#fff;border-color:#ff7300}
+    @media(max-width:1280px){.chapter-rail{display:none}}
+    @media(max-width:900px){.chapter-bar{top:66px;gap:10px}.chapter-tag{display:none}}
+    @media(prefers-reduced-motion:reduce){.work-ticker-track,.scroll-note b{animation:none}.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+    /* ===== PREVIEW / SHOW MORE ===== */
+    .detail-page.chapter{overflow:clip}
+    .detail-page.chapter.collapsed{max-height:min(96vh,820px);transition:max-height .7s cubic-bezier(.2,.7,.2,1)}
+    .detail-page.chapter.expanding{transition:max-height .9s cubic-bezier(.2,.7,.2,1)}
+    .chapter-more{position:absolute;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:center;align-items:flex-end;height:240px;padding-bottom:34px;background:linear-gradient(transparent,#080808 72%);pointer-events:none;transition:opacity .3s}
+    .chapter:not(.collapsed) .chapter-more{display:none}
+    .chapter-more button{pointer-events:auto;cursor:pointer;border:1px solid #ff7300;background:#ff7300;color:#080808;font:800 12px 'Plus Jakarta Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:15px 26px;border-radius:99px;display:inline-flex;gap:10px;align-items:center;transition:transform .25s,background .25s,color .25s}
+    .chapter-more button:hover{transform:translateY(-3px);background:transparent;color:#ff7300}
+    .chapter-more button b{display:inline-block;animation:bob 1.4s ease-in-out infinite}
+    .chapter-less{display:flex;justify-content:center;margin-top:50px}
+    .chapter.collapsed .chapter-less{display:none}
+    .chapter-less button{cursor:pointer;background:transparent;border:1px solid #3a3a3a;color:#c8c8c8;font:700 11px 'Plus Jakarta Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:12px 22px;border-radius:99px}
+    .chapter-less button:hover{border-color:#ff7300;color:#ff7300}
+    [data-theme="light"] .chapter-more{background:linear-gradient(transparent,#e8f4fb 72%)}
+    [data-theme="light"] .chapter-more button{color:#fff}
+    [data-theme="light"] .chapter-more button:hover{color:#ff7300}
+    [data-theme="light"] .chapter-less button{border-color:#a9d4ef;color:#12283c}
+
+    /* ===== PREVIEW REEL ===== */
+    .detail-page.chapter.collapsed{max-height:var(--preview-h,820px)}
+    .reel:not(.vreel){position:relative;margin:48px -24px 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+    .reel-track{display:flex;gap:16px;width:max-content;animation:reelMove 46s linear infinite;will-change:transform}
+    .reel.rev .reel-track{animation-direction:reverse}
+    .reel:hover .reel-track{animation-play-state:paused}
+    .reel-item{flex:none;height:250px;border-radius:18px;overflow:hidden;background:#151515;border:1px solid #262626;position:relative}
+    .reel-item img,.reel-item video{display:block;height:100%;width:auto;min-width:140px;object-fit:cover}
+    .reel-item span{position:absolute;left:10px;bottom:10px;padding:4px 10px;border-radius:99px;background:rgba(8,8,8,.7);backdrop-filter:blur(6px);color:#f1f1ec;font:800 9px 'Plus Jakarta Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase}
+    [data-theme="light"] .reel-item{background:#dbeef9;border-color:#cfe6f5}
+    @keyframes reelMove{to{transform:translateX(calc(-50% - 8px))}}
+    @media(max-width:700px){.reel-item{height:190px}.reel{margin-inline:-16px}}
+    @media(prefers-reduced-motion:reduce){.reel-track{animation:none;overflow-x:auto}}
+
+    /* ===== 2-COLUMN VERTICAL REEL ===== */
+    .vreel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:44px}
+    .vcol{min-width:0;display:flex;flex-direction:column;gap:12px}
+    .vcol-head{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #262626;border-radius:16px;background:#101010}
+    .vcol-head img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;border:2px solid #ff7300}
+    .vcol-head div{min-width:0;flex:1}
+    .vcol-head b{display:block;font:800 15px 'Plus Jakarta Sans',sans-serif}
+    .vcol-head small{display:block;color:#8d8d8d;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .vcol-head a{flex:none;font:800 10px 'Plus Jakarta Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#ff7300;text-decoration:none;border:1px solid #ff7300;border-radius:99px;padding:7px 11px}
+    .vcol-head a:hover{background:#ff7300;color:#080808}
+    .vcol-window{height:min(520px,66vh);overflow:hidden;border-radius:18px;border:1px solid #262626;background:#101010;-webkit-mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(transparent,#000 8%,#000 92%,transparent)}
+    .vcol-track{display:flex;flex-direction:column;gap:14px;padding:0;animation:vMove 38s linear infinite;will-change:transform}
+    .vcol.rev .vcol-track{animation-direction:reverse}
+    .vcol:hover .vcol-track{animation-play-state:paused}
+    .vcol-track img,.vcol-track video{display:block;width:100%;height:auto;min-height:120px;border-radius:14px;background:#181818}
+    @keyframes vMove{to{transform:translateY(calc(-50% - 7px))}}
+    [data-theme="light"] .vcol-head,[data-theme="light"] .vcol-window{background:#f5fbff;border-color:#cfe6f5}
+    [data-theme="light"] .vcol-head small{color:#5a7f96!important}
+    [data-theme="light"] .vcol-head a{color:#c25a00!important;border-color:#ff7300}
+    @media(max-width:700px){.vreel{gap:10px}.vcol-head a{display:none}.vcol-head{padding:10px}.vcol-window{height:min(420px,60vh)}}
+    @media(prefers-reduced-motion:reduce){.vcol-track{animation:none}.vcol-window{overflow-y:auto}}
+
+    .vcol-shot{display:block;height:min(400px,56vh);overflow:hidden;border-radius:18px;border:1px solid #262626;background:#101010}
+    .vcol-shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transition:transform .6s}
+    .vcol-shot:hover img{transform:scale(1.03)}
+    .vreel.four{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .vreel.four .vcol-window{height:min(440px,60vh);border-radius:14px}
+    .vreel.four .vcol-track{gap:10px;animation-duration:44s}
+    .vreel.four .vcol-track video{border-radius:10px}
+    @media(max-width:700px){.vreel.four{grid-template-columns:repeat(2,minmax(0,1fr))}.vreel.four .vcol:nth-child(n+3){display:none}.vcol-shot{height:min(320px,50vh)}}
+
+    /* ===== READABILITY: smaller, clearer text ===== */
+    .sky-hero h1{font-size:clamp(46px,7vw,98px);line-height:.95;letter-spacing:-.045em}
+    .sky-hero p{font-size:clamp(16px,1.5vw,19px);line-height:1.7;max-width:620px}
+    .services-intro h2{font-size:clamp(32px,4.2vw,54px);line-height:1.1;letter-spacing:-.03em}
+    .services-intro p{font-size:15px;line-height:1.7}
+    .bottom-card h2{font-size:clamp(32px,4.4vw,56px);line-height:1.1;letter-spacing:-.03em}
+    .bottom-card p{font-size:16px;line-height:1.75}
+    .work-ticker span{font-size:clamp(26px,4.4vw,58px)}
+    .detail-hero{padding:34px 0 22px}
+    .detail-hero h1,.detail-page .detail-hero h1{font-size:clamp(28px,3.7vw,46px);line-height:1.18;letter-spacing:-.02em;max-width:820px;font-weight:700}
+    .detail-hero h1:after{margin-top:20px}
+    .detail-hero p,.detail-page .detail-hero p{font-size:16px;line-height:1.8;max-width:700px}
+    .chapter .section-kicker{font-size:12px;letter-spacing:.16em}
+    .chapter .cap-block-head h3,.chapter .work h3{font-size:20px;letter-spacing:-.01em}
+    .chapter .cap-item h4{font-size:15.5px}
+    .chapter .cap-item p{font-size:14px;line-height:1.7}
+    .chapter .detail-card h3{font-size:18px}
+    .chapter .detail-card p,.chapter .detail-card li,.chapter .work-item{font-size:15px;line-height:1.75}
+    .chapter .workflow-step h5{font-size:13px}
+    .chapter .workflow-step p{font-size:13px;line-height:1.65}
+    .chapter .account-copy p,.chapter .social-note{font-size:14.5px;line-height:1.75}
+    .detail-page.chapter:before{opacity:.8}
+
+    /* ===== HERO SHORTCUTS ===== */
+    .hero-jump{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px;max-width:760px}
+    .hero-jump a{display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.22);background:rgba(8,8,8,.55);backdrop-filter:blur(8px);color:#f1f1ec;text-decoration:none;font:700 14px 'Plus Jakarta Sans',sans-serif;transition:transform .25s,background .25s,border-color .25s}
+    .hero-jump a b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#ff7300;color:#080808;font-size:11px;font-weight:800}
+    .hero-jump a:hover{transform:translateY(-3px);border-color:#ff7300;background:rgba(255,115,0,.14)}
+    [data-theme="light"] .hero-jump a{background:rgba(245,251,255,.85);border-color:#a9d4ef;color:#12283c}
+    [data-theme="light"] .hero-jump a b{color:#fff}
+    @media(max-width:700px){.hero-jump{gap:8px}.hero-jump a{font-size:13px;padding:8px 14px 8px 8px}}
+
+    /* ===== UPLIANCE CAROUSELS ===== */
+    .detail-page.carousel-section{display:block!important;min-height:0;padding:70px 0 90px;position:relative;border-top:1px solid #1d1d1d}
+    .cs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:34px}
+    .cs-card{border:1px solid #262626;border-radius:22px;background:#101010;overflow:hidden}
+    .cs-viewport{position:relative}
+    .cs-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+    .cs-track::-webkit-scrollbar{display:none}
+    .cs-track img{flex:none;width:100%;aspect-ratio:1/1;object-fit:cover;scroll-snap-align:center;display:block}
+    .cs-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:rgba(8,8,8,.72);color:#fff;font-size:24px;line-height:1;cursor:pointer;backdrop-filter:blur(6px);transition:background .2s,opacity .2s}
+    .cs-nav:hover{background:#ff7300;color:#080808}
+    .cs-nav.prev{left:12px}.cs-nav.next{right:12px}
+    .cs-nav[disabled]{opacity:0;pointer-events:none}
+    .cs-count{position:absolute;right:12px;top:12px;padding:5px 11px;border-radius:99px;background:rgba(8,8,8,.72);color:#fff;font:800 11px 'Plus Jakarta Sans',sans-serif;letter-spacing:.1em}
+    .cs-dots{display:flex;justify-content:center;gap:7px;padding:14px 0 2px}
+    .cs-dots i{width:7px;height:7px;border-radius:50%;background:#3a3a3a;transition:.25s}
+    .cs-dots i.on{background:#ff7300;width:20px;border-radius:99px}
+    .cs-copy{padding:10px 20px 22px}
+    .cs-copy h4{margin:6px 0 6px;font:700 18px 'Plus Jakarta Sans',sans-serif}
+    .cs-copy p{margin:0 0 12px;font-size:14.5px;line-height:1.7;color:#aeb3b9}
+    .cs-copy a{font:800 11px 'Plus Jakarta Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#ff7300;text-decoration:none}
+    .cs-copy a:hover{text-decoration:underline}
+    [data-theme="light"] .cs-card{background:#f5fbff;border-color:#cfe6f5}
+    [data-theme="light"] .cs-dots i{background:#a9c8db}
+    [data-theme="light"] .cs-dots i.on{background:#ff7300}
+    [data-theme="light"] .detail-page .cs-copy a{color:#c25a00!important}
+    @media(max-width:760px){.cs-grid{grid-template-columns:1fr}}
+
+    /* ===== MINI CAROUSEL ROWS ===== */
+    .mini-wrap{margin-top:40px}
+    .mini-title{margin:0 0 18px;font:700 20px 'Plus Jakarta Sans',sans-serif}
+    .mini-title span{font-weight:500;font-size:14px;color:#8d939a}
+    .mini-reel{position:relative;overflow:hidden;margin:0 -24px 14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+    .mini-track{display:flex;gap:16px;width:max-content;animation:miniMove 40s linear infinite;will-change:transform}
+    .mini-reel.rev .mini-track{animation-direction:reverse;animation-duration:46s}
+    .mini-reel:hover .mini-track{animation-play-state:paused}
+    .mini-card{flex:none;position:relative;display:block;width:270px;aspect-ratio:1/1;border-radius:20px;overflow:hidden;border:1px solid #262626;background:#151515}
+    .mini-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+    .mini-card img.on{opacity:1}
+    .mini-badge{position:absolute;right:8px;top:8px;padding:3px 9px;border-radius:99px;background:rgba(8,8,8,.72);color:#fff;font:800 10px 'Plus Jakarta Sans',sans-serif;letter-spacing:.1em}
+    .mini-card:hover{border-color:#ff7300}
+    [data-theme="light"] .mini-card{background:#dbeef9;border-color:#cfe6f5}
+    @keyframes miniMove{to{transform:translateX(calc(-25% - 4px))}}
+    @media(max-width:700px){.mini-card{width:210px}.mini-reel{margin-inline:-16px}}
+    @media(prefers-reduced-motion:reduce){.mini-track{animation:none}.mini-reel{overflow-x:auto}}
+
+    /* ===== INSTAGRAM REEL EMBEDS ===== */
+    .ig-reels{margin:36px 0 8px}
+    .ig-reels-title{margin:0 0 16px;font:700 18px 'Plus Jakarta Sans',sans-serif}
+    .ig-reels-title span{font-weight:500;font-size:13.5px;color:#8d939a}
+    .ig-reels-row{display:flex;gap:16px;flex-wrap:wrap}
+    .ig-embed{flex:0 0 auto;width:300px;height:540px;border-radius:18px;overflow:hidden;border:1px solid #262626;background:#fff}
+    .ig-embed iframe{width:100%;height:100%;border:0;display:block}
+    [data-theme="light"] .ig-embed{border-color:#cfe6f5}
+    @media(max-width:700px){.ig-embed{width:100%;max-width:340px}}
 </style>
 </head>
 <body>
@@ -1810,7 +2013,7 @@
     <div class="nav-inner">
       <a class="brand" href="#" onclick="showHome()"><span class="dot"></span> AKASH / PORTFOLIO</a>
       <div class="nav-links">
-        <a href="#services" onclick="showHome()">Services</a>
+        <a href="#services">Work</a>
         <a href="#about" onclick="showHome()">About</a>
         <a href="#contact" onclick="showHome()">Contact</a>
       </div>
@@ -1820,6 +2023,14 @@
       </button>
     </div>
   </nav>
+
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <aside class="chapter-rail" id="chapterRail" aria-label="Chapters">
+    <a href="#social" data-target="social"><span>01</span><em>Social</em></a>
+    <a href="#ai-video" data-target="ai-video"><span>02</span><em>AI Video</em></a>
+    <a href="#content" data-target="content"><span>03</span><em>Content</em></a>
+    <a href="#marketing" data-target="marketing"><span>04</span><em>Marketing</em></a>
+  </aside>
 
   
   <main id="homePage">
@@ -1911,6 +2122,12 @@
             Marketing, social media, AI video and content creation —
             built to turn brands into stories people want to stop and watch.
           </p>
+          <div class="hero-jump" aria-label="Jump to a section">
+            <a href="#social"><b>01</b>Social Media</a>
+            <a href="#ai-video"><b>02</b>AI Video</a>
+            <a href="#content"><b>03</b>Content Creation</a>
+            <a href="#marketing"><b>04</b>Marketing</a>
+          </div>
         </div>
       </section>
 
@@ -1918,122 +2135,170 @@
         <div class="services-intro">
           <div class="section-kicker">THE WORK</div>
           <h2>Four ways I make<br><em>brands fly.</em></h2>
-          <p>Pick a cloud. Each one takes you into a different side of my work.</p>
+          <p>No menus, no clicks. Social, AI film, content and strategy — a preview of each, open what you want.</p>
         </div>
 
-        <div class="floating-services">
-          <button class="sky-service service-one" onclick="openService('marketing')">
-            <span class="service-icon">↗</span>
-            <small>01 / STRATEGY</small>
-            <strong>Marketing</strong>
-            <span>Campaigns · Positioning · Product stories</span>
-          </button>
-          <button class="sky-service service-two" onclick="openService('social')">
-            <span class="service-icon">↗</span>
-            <small>02 / GROWTH</small>
-            <strong>Social Media</strong>
-            <span>Instagram · Content systems · Community</span>
-          </button>
-          <button class="sky-service service-three" onclick="openService('ai-video')">
-            <span class="service-icon">↗</span>
-            <small>03 / AI CREATIVE</small>
-            <strong>AI Video</strong>
-            <span>Concepts · Prompts · Cinematic visuals</span>
-          </button>
-          <button class="sky-service service-four" onclick="openService('content')">
-            <span class="service-icon">↗</span>
-            <small>04 / CONTENT</small>
-            <strong>Content Creation</strong>
-            <span>Visuals · Copy · Carousels · Campaigns</span>
-          </button>
+        <div class="work-ticker" aria-hidden="true">
+          <div class="work-ticker-track">
+            <span>Social Media</span><i>✦</i><span>AI Video</span><i>✦</i><span>Content Creation</span><i>✦</i><span>Marketing</span><i>✦</i>
+            <span>Social Media</span><i>✦</i><span>AI Video</span><i>✦</i><span>Content Creation</span><i>✦</i><span>Marketing</span><i>✦</i>
+          </div>
         </div>
+        <div class="scroll-note">A taste of each — tap “Show more” to open <b>↓</b></div>
       </section>
 
 
-      <section class="sky-bottom">
-        <div class="wrap">
-          <div class="bottom-card">
-            <span class="section-kicker">BEYOND THE CLOUDS</span>
-            <h2>Creative thinking.<br><span>Real execution.</span></h2>
-            <p>
-              From social campaigns and product storytelling to anime-inspired AI videos
-              and premium editorial visuals, I work across the full creative journey —
-              from the first idea to the final post.
-            </p>
-            <a class="btn primary" href="#contact" onclick="showHome()">Let's create something ↗</a>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <section class="section" id="featured-build">
-      <div class="wrap">
-        <div class="section-kicker">FEATURED BUILD</div>
-        <h2>A product I built, <span class="gradient">not just a client project.</span></h2>
-        <div class="built-embed">
-          <iframe src="https://ai-lens.website" title="LensAI — AI food photography for restaurants, built by Akash" loading="lazy"></iframe>
-          <div class="built-embed-copy">
-            <h4>LensAI</h4>
-            <p>AI food photography for restaurants — upload a phone photo or just type the dish name and get studio-quality images that drive orders on Zomato, Swiggy and your own menu. End to end: concept, product, prompting pipeline and this landing page — built by me.</p>
-            <a class="tool-chip" href="https://ai-lens.website" target="_blank" rel="noopener noreferrer">Visit ai-lens.website ↗</a>
-          </div>
-        </div>
-
-        <div class="built-embed">
-          <div class="built-embed-shot"><img src="assets/visuals/higgsfield-photoshoot-studio.jpg" alt="Product Photoshoot Studio — Higgsfield app built by Akash, showing product-consistent AI photoshoot generations"></div>
-          <div class="built-embed-copy">
-            <span class="tool-chip built-embed-tag">Higgsfield App</span>
-            <h4>Product Photoshoot Studio</h4>
-            <p>An app I built on Higgsfield that generates on-brand product photography from a simple text prompt while keeping the exact product consistent across every shot — no drift, no manual compositing.</p>
-            <a class="tool-chip" href="https://higgsfield.ai/supercomputer/apps/c07d202e-2c99-4087-a5d2-3943468d13f4/view" target="_blank" rel="noopener noreferrer">Open Product Photoshoot Studio ↗</a>
-          </div>
-        </div>
-
-        <div class="li-badge-wrap">
-          <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="dark" data-type="VERTICAL" data-vanity="akash-vaidyanathan-306112255" data-version="v1">
-            <a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/akash-vaidyanathan-306112255?trk=profile-badge">Akash Vaidyanathan</a>
-          </div>
-        </div>
+      <div class="chapters" id="work">
+<!-- SOCIAL -->
+  <section class="detail-page chapter" id="social" data-num="01" data-name="Social Media">
+    <div class="wrap">
+      <div class="chapter-bar"><span class="chapter-num">01</span><span class="chapter-name">Social Media</span><span class="chapter-tag">Growth</span><span class="chapter-line"></span></div>
+      <div class="detail-hero">
+        <div class="section-kicker">01 / Social Media Handling</div>
+        <h1>Social content designed to feel <span class="gradient">native, consistent and shareable.</span></h1>
+        <p>
+          Instagram accounts handled include <b>Happy Pet</b> and <b>Upliance</b>. I work across content ideas, visual direction, product storytelling, captions, carousel concepts, short-form video concepts and day-to-day brand communication.
+        </p>
       </div>
-    </section>
-    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 
-    <section class="section" id="about">
-      <div class="wrap">
-        <div class="section-kicker">About</div>
-        <h2>Creative thinking with execution in mind.</h2>
-        <div class="about-grid">
-          <div class="card">
-            <h3>My approach</h3>
-            <p>
-              I work at the intersection of content, branding, social media and AI-assisted creative production. My focus is not just making something visually attractive — it is making the idea clear, platform-native, memorable and useful for the brand.
-            </p>
-            <div class="chips">
-              <span class="chip">Campaign Concepts</span>
-              <span class="chip">Instagram Carousels</span>
-              <span class="chip">AI Visual Direction</span>
-              <span class="chip">Video Concepts</span>
-              <span class="chip">Prompt Design</span>
-              <span class="chip">Caption Writing</span>
-              <span class="chip">Product Storytelling</span>
-              <span class="chip">Brand Consistency</span>
+      <div class="account-grid">
+        <article class="account-card">
+          <div class="account-top">
+            <div class="avatar">HP</div>
+            <div class="handle">@happypet.app<small>Pet parenting / social content</small></div>
+            <div class="ig-badge">INSTAGRAM</div>
+          </div>
+          <div class="preview ig-screenshot"><img src="assets/instagram/happypet-screenshot.png" alt="Happy Pet Instagram profile screenshot"></div>
+          <div class="account-copy">
+            <h3>Happy Pet 🐶</h3>
+            <p>Playful pet-first storytelling, app-led communication, community content and visually engaging posts designed to make pet parenting feel easier and more fun.</p>
+            <div class="workflow">
+              <div class="workflow-step"><h5>Strategy</h5><p>Marketing planning · Social strategy · Content planning</p></div>
+              <div class="workflow-step"><h5>Social Media</h5><p>IG management · Reels · Community · Content calendars</p></div>
+              <div class="workflow-step"><h5>Performance</h5><p>Meta &amp; Google Ads · Ad creatives · Targeting</p></div>
+              <div class="workflow-step"><h5>Content</h5><p>Social posts · Scripts · Pet-focused content</p></div>
+              <div class="workflow-step"><h5>AI Video</h5><p>AI concepts · AI visuals · Short-form ads</p></div>
+              <div class="workflow-step"><h5>Production</h5><p>Product shoots · Lifestyle content · Shoot concepts</p></div>
+              <div class="workflow-step"><h5>Campaigns</h5><p>Valentine's Day · App promotion · Engagement</p></div>
             </div>
+            <a class="account-link" href="https://www.instagram.com/happypet.app/" target="_blank">View Instagram ↗</a>
           </div>
-          <div class="stats">
-            <div class="stat"><b>4</b><span>Core service areas</span></div>
-            <div class="stat"><b>AI +</b><span>Creative production workflow</span></div>
-            <div class="stat"><b>Social</b><span>Platform-first mindset</span></div>
-            <div class="stat"><b>Brand</b><span>Consistent visual thinking</span></div>
+        </article>
+
+        <article class="account-card">
+          <div class="account-top">
+            <div class="avatar">UP</div>
+            <div class="handle">@upliance.ai<small>Smart cooking / consumer tech</small></div>
+            <div class="ig-badge">INSTAGRAM</div>
+          </div>
+          <div class="preview ig-screenshot"><img src="assets/instagram/upliance-screenshot.png" alt="Upliance.ai Instagram profile screenshot"></div>
+          <div class="account-copy">
+            <h3>Upliance.ai 🍳</h3>
+            <p>Product-led storytelling, air-fryer and smart-kitchen creatives, anime-style concepts, editorial product visuals, carousels and social copy.</p>
+            <div class="workflow">
+              <div class="workflow-step"><h5>Strategy</h5><p>Product marketing · Feature comms · Brand storytelling</p></div>
+              <div class="workflow-step"><h5>Social Media</h5><p>IG management · Reels · LinkedIn · YouTube</p></div>
+              <div class="workflow-step"><h5>Performance</h5><p>Ad concepts · Performance creatives · Conversion copy</p></div>
+              <div class="workflow-step"><h5>Content</h5><p>Product storytelling · Launches · Carousels</p></div>
+              <div class="workflow-step"><h5>AI Video</h5><p>Product videos · Cinematic storytelling · Storyboarding</p></div>
+              <div class="workflow-step"><h5>Production</h5><p>AI product photography · Lifestyle shoots · Art direction</p></div>
+              <div class="workflow-step"><h5>Tools</h5><p>Higgsfield · Kling Turbo · Seedance 2.0 · Omni Flash 1.1</p></div>
+            </div>
+            <a class="account-link" href="https://www.instagram.com/upliance.ai/" target="_blank">View Instagram ↗</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="social-note">
+        <b>Visual proof:</b> the panels above pull live profile data and post imagery directly from Instagram (avatar, follower counts and recent posts) as of the date this portfolio was last updated. Numbers change over time — visit the profiles directly for current stats.
+      </div>
+
+
+      <div class="cap-block">
+        <div class="cap-block-head"><h3>Channel management</h3><span>Platform-native, end to end</span></div>
+        <div class="cap-grid">
+          <div class="cap-item"><h4>Instagram</h4>
+            <div class="flow"><span class="flow-step">Strategy</span><span class="flow-arrow">→</span><span class="flow-step">Reels</span><span class="flow-arrow">→</span><span class="flow-step">Stories</span><span class="flow-arrow">→</span><span class="flow-step">Carousels</span><span class="flow-arrow">→</span><span class="flow-step">Community</span></div>
+          </div>
+          <div class="cap-item"><h4>LinkedIn</h4>
+            <div class="flow"><span class="flow-step">Strategy</span><span class="flow-arrow">→</span><span class="flow-step">Storytelling</span><span class="flow-arrow">→</span><span class="flow-step">Thought Leadership</span><span class="flow-arrow">→</span><span class="flow-step">Updates</span></div>
+          </div>
+          <div class="cap-item"><h4>YouTube</h4>
+            <div class="flow"><span class="flow-step">Concepts</span><span class="flow-arrow">→</span><span class="flow-step">Shorts</span><span class="flow-arrow">→</span><span class="flow-step">Long-form</span><span class="flow-arrow">→</span><span class="flow-step">Thumbnails</span></div>
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="section" id="certification">
-      <div class="wrap">
-        <div class="section-kicker">Certification</div>
-        <h2>Verified credential.</h2>
-        <div class="cert-card" style="max-width:720px">
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h3>Content Planning</h3>
+          <p>Content buckets, recurring series, campaign themes, carousel structures and short-form video ideas.</p>
+        </div>
+        <div class="detail-card">
+          <h3>Caption & SEO Copy</h3>
+          <p>Minimal or long-form captions, relevant keywords, natural discoverability and tone-matched brand copy.</p>
+        </div>
+        <div class="detail-card">
+          <h3>Creative Consistency</h3>
+          <p>Keeping typography, product treatment, color balance, visual tone and messaging aligned across posts.</p>
+        </div>
+      </div>
+      <div class="work">
+        <h3>Content formats I work with</h3>
+        <div class="work-list">
+          <div class="work-item">Instagram carousel slides with editorial photography, product focus and customer-story narratives.</div>
+          <div class="work-item">Anime-style cooking videos and keyword-rich descriptions designed for discovery without over-explaining the product.</div>
+          <div class="work-item">Product-focused social creatives where the product remains accurate while the surrounding creative changes.</div>
+          <div class="work-item">Customer-story framing, testimonials and decision-making narratives that turn product features into relatable content.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- AI VIDEO -->
+  <section class="detail-page chapter" id="ai-video" data-num="02" data-name="AI Video">
+    <div class="wrap">
+      <div class="chapter-bar"><span class="chapter-num">02</span><span class="chapter-name">AI Video</span><span class="chapter-tag">AI Creative</span><span class="chapter-line"></span></div>
+      <div class="detail-hero">
+        <div class="section-kicker">02 / AI Video Generation</div>
+        <h1>AI video ideas with <span class="gradient">story, art direction and brand purpose.</span></h1>
+        <p>
+          My AI video workflow starts with the idea, not the tool. I define the visual world, scene progression, camera feeling, product role, pacing and prompt language so the output feels intentional rather than random.
+        </p>
+      </div>
+
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h3>Concept Development</h3>
+          <p>Hooks, scenes, narrative arcs, stylized worlds and product integration that fits naturally into the story.</p>
+        </div>
+        <div class="detail-card">
+          <h3>Prompt Direction</h3>
+          <p>Detailed visual prompts covering light, palette, composition, realism level, mood, camera and consistency.</p>
+        </div>
+        <div class="detail-card">
+          <h3>Creative Styles</h3>
+          <p>Anime-inspired cooking videos, cinematic product moments, realistic editorial frames and illustrative storytelling.</p>
+        </div>
+      </div>
+
+      <div class="cap-block">
+        <div class="cap-block-head"><h3>AI production flow</h3><span>Idea to final cut</span></div>
+        <div class="flow">
+          <span class="flow-step">Concept</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Prompt</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Generate</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Edit</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Publish</span>
+        </div>
+        <div class="tool-row">
+          <span class="tool-chip">Higgsfield</span><span class="tool-chip">Kling Turbo</span><span class="tool-chip">Seedance 2.0</span><span class="tool-chip">Omni Flash 1.1</span>
+        </div>
+      </div>
+
+      <div class="cap-block">
+        <div class="cap-block-head"><h3>Certification</h3><span>Higgsfield Academy</span></div>
+        <div class="cert-card">
           <img class="cert-image" src="assets/HFA-2026-O7Z5BYIGFNBE-upscaled.png" alt="Certificate of Completion — The AI Filmmaking Pipeline, Cinema Studio Pro Guide, Higgsfield Academy, awarded to Akash V" loading="lazy">
           <div class="cert-meta">
             <span><b>Credential ID</b>HFA-2026-O7Z5BYIGFNBE</span>
@@ -2041,41 +2306,135 @@
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="section" id="contact">
-      <div class="wrap">
-        <div class="contact">
-          <h3>Have a campaign, product or content idea?</h3>
-          <p>Use this section for your email, Instagram, LinkedIn or a contact form. Replace the placeholder text below with your actual contact details.</p>
-          <div class="cta-row">
-            <a class="btn" style="background:#0b0b0b;color:white;border-color:#0b0b0b" href="mailto:vrakash006@gmail.com">your@email.com</a>
-            <a class="btn" style="background:transparent;color:#0b0b0b;border-color:#8f8f89" href="https://www.linkedin.com/in/akash-vaidyanathan-306112255/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-          </div>
+      <div class="video-showcase">
+        <div class="video-showcase-head">
+          <h3>AI video work</h3>
+          <p>Generated films across product storytelling, cinematic worlds and experimental motion.</p>
+        </div>
+        <div class="creative-look-grid">
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/b2.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>B2</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/c3.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>C3</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/cinematic-slow-motion.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Cinematic study</span><h4>Slow Motion</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/krishna-janmashtami-2.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Mythological story</span><h4>Krishna Janmashtami</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/lcf-creation.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Creative direction</span><h4>LCF Creation</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/air-fryer-6l.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Product film</span><h4>Air Fryer 6L</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/processor-chip.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Product detail</span><h4>Processor Chip</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/raki-explainer.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Explainer</span><h4>Raki</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/recipe-reel.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Food story</span><h4>Recipe Reel</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/spiderman-creative.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Character film</span><h4>Spider-Man</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/before-and-after.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Transformation</span><h4>Before &amp; After</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/download.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Visual Experiment</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/festival-personalised.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Festival creative</span><h4>Personalised Festival</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/glass-lid.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Product detail</span><h4>Glass Lid</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/hf-20260807.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study I</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/hf-20260811.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study II</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/news.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>News visual</span><h4>News</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/trika.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Trika</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/hf-20260803.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study III</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/hf-20260804.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study IV</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/hf-20260915.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study V</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/hf-20260723.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study VI</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/hf-20260924.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study VII</h4></div></article>
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/ai-video/creative/boxing.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Sports film</span><h4>Boxing</h4></div></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- MARKETING -->
+  <section class="detail-page chapter" id="content" data-num="03" data-name="Content Creation">
+    <div class="wrap">
+      <div class="chapter-bar"><span class="chapter-num">03</span><span class="chapter-name">Content Creation</span><span class="chapter-tag">Content</span><span class="chapter-line"></span></div>
+      <div class="detail-hero">
+        <div class="section-kicker">03 / Content Creation</div>
+        <h1>Content that turns a product into <span class="gradient">a story people remember.</span></h1>
+        <p>
+          I create and direct content for social, brand and campaign use — from a single visual to a multi-slide narrative. I pay close attention to composition, product accuracy, color palette, copy hierarchy and the emotion of the final frame.
+        </p>
+      </div>
+
+
+
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h3>Visual Content</h3>
+          <p>Editorial product images, campaign visuals, social post concepts, stylized illustrations and carousel art direction.</p>
+        </div>
+        <div class="detail-card">
+          <h3>Copy</h3>
+          <p>Hooks, captions, slide copy, testimonials, response messages, promotional copy and short-form brand writing.</p>
+        </div>
+        <div class="detail-card">
+          <h3>Brand Systems</h3>
+          <p>Reusable palettes, visual rules, content templates and creative consistency across different content formats.</p>
         </div>
       </div>
 
-        <div class="contact-links">
-          <a href="https://www.linkedin.com/in/akash-vaidyanathan-306112255/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+      <div class="cap-block">
+        <div class="cap-block-head"><h3>Shoot &amp; production</h3><span>What separates it from digital-only work</span></div>
+        <div class="flow">
+          <span class="flow-step">Shoot</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Production</span><span class="flow-arrow">→</span>
+          <span class="flow-step">Post</span><span class="flow-arrow">→</span>
+          <span class="flow-step">AI Production</span>
         </div>
-        </section>
+        <div class="tool-row">
+          <span class="tool-chip">Product Shoots</span><span class="tool-chip">Lifestyle Photography</span><span class="tool-chip">Art Direction</span><span class="tool-chip">Retouching</span><span class="tool-chip">Color Correction</span>
+        </div>
+      </div>
 
-    <footer>
-      <div class="wrap">© 2026 Akash. Creative marketing portfolio.</div>
-    </footer>
-  </main>
+      <div class="video-showcase">
+        <div class="video-showcase-head">
+          <h3>Behind the scenes</h3>
+          <p>Shoots, setups and the process behind the final content.</p>
+        </div>
+        <div class="creative-look-grid">
+          <article class="video-piece"><video controls preload="metadata"><source src="assets/content-bts/bts-process.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Process</span><h4>On Set</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-01.jpg" alt="Behind the scenes — event booth"><div class="video-piece-copy"><span>BTS</span><h4>Booth Setup</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-02.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>On Location</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-03.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Shoot Day</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-04.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Production</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-05.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Setup</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-06.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>On Set</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-07.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Direction</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-08.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Frame Check</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-09.jpg" alt="Behind the scenes — video shoot with green screen"><div class="video-piece-copy"><span>BTS</span><h4>Studio Shoot</h4></div></article>
+          <article class="video-piece"><img src="assets/content-bts/bts-10.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Creative Session</h4></div></article>
+        </div>
+      </div>
 
-<!-- MARKETING -->
-  <section class="detail-page" id="marketing">
+      <div class="cap-block">
+        <div class="cap-block-head"><h3>E-commerce</h3><span>Shopify &amp; product pages</span></div>
+        <div class="tool-row">
+          <span class="tool-chip">Shopify</span><span class="tool-chip">Product Pages</span><span class="tool-chip">Product Launches</span><span class="tool-chip">Conversion Optimization</span><span class="tool-chip">Customer Journey</span>
+        </div>
+      </div>
+
+      <div class="work">
+        <h3>Visual language I have worked with</h3>
+        <div class="work-list">
+          <div class="work-item">Premium editorial cookbook-style imagery with black, beige, orange and purple brand accents.</div>
+          <div class="work-item">Minimal graphic concepts designed for clean reproduction and simplified visual forms.</div>
+          <div class="work-item">Product-focused social creatives where one object is replaced without disturbing the rest of the scene.</div>
+          <div class="work-item">Story-led carousel content built around real customer motivations, decision-making and product experience.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- CONTENT -->
+  <section class="detail-page chapter" id="marketing" data-num="04" data-name="Marketing">
     <div class="wrap">
-      <button class="back" onclick="showHome()">← Back to portfolio</button>
+      <div class="chapter-bar"><span class="chapter-num">04</span><span class="chapter-name">Marketing</span><span class="chapter-tag">Strategy</span><span class="chapter-line"></span></div>
       <div class="detail-hero">
-        <div class="section-kicker">01 / Marketing</div>
+        <div class="section-kicker">04 / Marketing</div>
         <h1>Marketing built around <span class="gradient">clarity, product and attention.</span></h1>
         <p>
           I develop campaign directions and communication ideas that make a product easier to understand, more desirable and more relevant to its audience. The goal is to connect product benefits with a story people actually want to engage with.
         </p>
       </div>
+
 
 
       <div class="cap-block">
@@ -2244,157 +2603,103 @@
     </div>
   </section>
 
-  <!-- SOCIAL -->
-  <section class="detail-page" id="social">
-    <div class="wrap">
-      <button class="back" onclick="showHome()">← Back to portfolio</button>
-      <div class="detail-hero">
-        <div class="section-kicker">02 / Social Media Handling</div>
-        <h1>Social content designed to feel <span class="gradient">native, consistent and shareable.</span></h1>
-        <p>
-          Instagram accounts handled include <b>Happy Pet</b> and <b>Upliance</b>. I work across content ideas, visual direction, product storytelling, captions, carousel concepts, short-form video concepts and day-to-day brand communication.
-        </p>
+      <section class="detail-page carousel-section" id="carousels">
+        <div class="wrap">
+          <div class="chapter-bar"><span class="chapter-num">★</span><span class="chapter-name">Upliance Carousels</span><span class="chapter-tag">Instagram</span><span class="chapter-line"></span></div>
+          <div class="detail-hero">
+            <div class="section-kicker">Selected work / Upliance.ai</div>
+            <h1>Carousels that turn <span class="gradient">product features into swipeable stories.</span></h1>
+            <p>Recent carousels from the <b>@upliance.ai</b> Instagram account, flipping through live. Tap any one to open the original post.</p>
+          </div>
+          <div class="mini-wrap"><div class="mini-reel"><div class="mini-track"><a class="mini-card" href="https://www.instagram.com/p/Ddlux3Jj-W9/" target="_blank" rel="noopener" data-n="6"><img src="assets/upliance-carousels/m1-1.jpg" alt="Upliance carousel 1 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m1-2.jpg" alt="Upliance carousel 1 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m1-3.jpg" alt="Upliance carousel 1 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m1-4.jpg" alt="Upliance carousel 1 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m1-5.jpg" alt="Upliance carousel 1 — slide 5" loading="lazy"><img src="assets/upliance-carousels/m1-6.jpg" alt="Upliance carousel 1 — slide 6" loading="lazy"><span class="mini-badge">1 / 6</span></a><a class="mini-card" href="https://www.instagram.com/p/DdbXTn_D-5Q/" target="_blank" rel="noopener" data-n="6"><img src="assets/upliance-carousels/m2-1.jpg" alt="Upliance carousel 2 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m2-2.jpg" alt="Upliance carousel 2 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m2-3.jpg" alt="Upliance carousel 2 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m2-4.jpg" alt="Upliance carousel 2 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m2-5.jpg" alt="Upliance carousel 2 — slide 5" loading="lazy"><img src="assets/upliance-carousels/m2-6.jpg" alt="Upliance carousel 2 — slide 6" loading="lazy"><span class="mini-badge">1 / 6</span></a><a class="mini-card" href="https://www.instagram.com/p/DdTtx5hj-Wl/" target="_blank" rel="noopener" data-n="3"><img src="assets/upliance-carousels/m3-1.jpg" alt="Upliance carousel 3 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m3-2.jpg" alt="Upliance carousel 3 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m3-3.jpg" alt="Upliance carousel 3 — slide 3" loading="lazy"><span class="mini-badge">1 / 3</span></a><a class="mini-card" href="https://www.instagram.com/p/DdJeD2oD2_v/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m4-1.jpg" alt="Upliance carousel 4 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m4-2.jpg" alt="Upliance carousel 4 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m4-3.jpg" alt="Upliance carousel 4 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m4-4.jpg" alt="Upliance carousel 4 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Ddlux3Jj-W9/" target="_blank" rel="noopener" data-n="6"><img src="assets/upliance-carousels/m1-1.jpg" alt="Upliance carousel 1 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m1-2.jpg" alt="Upliance carousel 1 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m1-3.jpg" alt="Upliance carousel 1 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m1-4.jpg" alt="Upliance carousel 1 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m1-5.jpg" alt="Upliance carousel 1 — slide 5" loading="lazy"><img src="assets/upliance-carousels/m1-6.jpg" alt="Upliance carousel 1 — slide 6" loading="lazy"><span class="mini-badge">1 / 6</span></a><a class="mini-card" href="https://www.instagram.com/p/DdbXTn_D-5Q/" target="_blank" rel="noopener" data-n="6"><img src="assets/upliance-carousels/m2-1.jpg" alt="Upliance carousel 2 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m2-2.jpg" alt="Upliance carousel 2 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m2-3.jpg" alt="Upliance carousel 2 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m2-4.jpg" alt="Upliance carousel 2 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m2-5.jpg" alt="Upliance carousel 2 — slide 5" loading="lazy"><img src="assets/upliance-carousels/m2-6.jpg" alt="Upliance carousel 2 — slide 6" loading="lazy"><span class="mini-badge">1 / 6</span></a><a class="mini-card" href="https://www.instagram.com/p/DdTtx5hj-Wl/" target="_blank" rel="noopener" data-n="3"><img src="assets/upliance-carousels/m3-1.jpg" alt="Upliance carousel 3 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m3-2.jpg" alt="Upliance carousel 3 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m3-3.jpg" alt="Upliance carousel 3 — slide 3" loading="lazy"><span class="mini-badge">1 / 3</span></a><a class="mini-card" href="https://www.instagram.com/p/DdJeD2oD2_v/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m4-1.jpg" alt="Upliance carousel 4 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m4-2.jpg" alt="Upliance carousel 4 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m4-3.jpg" alt="Upliance carousel 4 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m4-4.jpg" alt="Upliance carousel 4 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Ddlux3Jj-W9/" target="_blank" rel="noopener" data-n="6"><img src="assets/upliance-carousels/m1-1.jpg" alt="Upliance carousel 1 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m1-2.jpg" alt="Upliance carousel 1 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m1-3.jpg" alt="Upliance carousel 1 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m1-4.jpg" alt="Upliance carousel 1 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m1-5.jpg" alt="Upliance carousel 1 — slide 5" loading="lazy"><img src="assets/upliance-carousels/m1-6.jpg" alt="Upliance carousel 1 — slide 6" loading="lazy"><span class="mini-badge">1 / 6</span></a><a class="mini-card" href="https://www.instagram.com/p/DdbXTn_D-5Q/" target="_blank" rel="noopener" data-n="6"><img src="assets/upliance-carousels/m2-1.jpg" alt="Upliance carousel 2 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m2-2.jpg" alt="Upliance carousel 2 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m2-3.jpg" alt="Upliance carousel 2 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m2-4.jpg" alt="Upliance carousel 2 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m2-5.jpg" alt="Upliance carousel 2 — slide 5" loading="lazy"><img src="assets/upliance-carousels/m2-6.jpg" alt="Upliance carousel 2 — slide 6" loading="lazy"><span class="mini-badge">1 / 6</span></a><a class="mini-card" href="https://www.instagram.com/p/DdTtx5hj-Wl/" target="_blank" rel="noopener" data-n="3"><img src="assets/upliance-carousels/m3-1.jpg" alt="Upliance carousel 3 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m3-2.jpg" alt="Upliance carousel 3 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m3-3.jpg" alt="Upliance carousel 3 — slide 3" loading="lazy"><span class="mini-badge">1 / 3</span></a><a class="mini-card" href="https://www.instagram.com/p/DdJeD2oD2_v/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m4-1.jpg" alt="Upliance carousel 4 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m4-2.jpg" alt="Upliance carousel 4 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m4-3.jpg" alt="Upliance carousel 4 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m4-4.jpg" alt="Upliance carousel 4 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Ddlux3Jj-W9/" target="_blank" rel="noopener" data-n="6"><img src="assets/upliance-carousels/m1-1.jpg" alt="Upliance carousel 1 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m1-2.jpg" alt="Upliance carousel 1 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m1-3.jpg" alt="Upliance carousel 1 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m1-4.jpg" alt="Upliance carousel 1 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m1-5.jpg" alt="Upliance carousel 1 — slide 5" loading="lazy"><img src="assets/upliance-carousels/m1-6.jpg" alt="Upliance carousel 1 — slide 6" loading="lazy"><span class="mini-badge">1 / 6</span></a><a class="mini-card" href="https://www.instagram.com/p/DdbXTn_D-5Q/" target="_blank" rel="noopener" data-n="6"><img src="assets/upliance-carousels/m2-1.jpg" alt="Upliance carousel 2 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m2-2.jpg" alt="Upliance carousel 2 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m2-3.jpg" alt="Upliance carousel 2 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m2-4.jpg" alt="Upliance carousel 2 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m2-5.jpg" alt="Upliance carousel 2 — slide 5" loading="lazy"><img src="assets/upliance-carousels/m2-6.jpg" alt="Upliance carousel 2 — slide 6" loading="lazy"><span class="mini-badge">1 / 6</span></a><a class="mini-card" href="https://www.instagram.com/p/DdTtx5hj-Wl/" target="_blank" rel="noopener" data-n="3"><img src="assets/upliance-carousels/m3-1.jpg" alt="Upliance carousel 3 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m3-2.jpg" alt="Upliance carousel 3 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m3-3.jpg" alt="Upliance carousel 3 — slide 3" loading="lazy"><span class="mini-badge">1 / 3</span></a><a class="mini-card" href="https://www.instagram.com/p/DdJeD2oD2_v/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m4-1.jpg" alt="Upliance carousel 4 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m4-2.jpg" alt="Upliance carousel 4 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m4-3.jpg" alt="Upliance carousel 4 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m4-4.jpg" alt="Upliance carousel 4 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a></div></div><div class="mini-reel rev"><div class="mini-track"><a class="mini-card" href="https://www.instagram.com/p/Dc_LZKhj6hO/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m5-1.jpg" alt="Upliance carousel 5 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m5-2.jpg" alt="Upliance carousel 5 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m5-3.jpg" alt="Upliance carousel 5 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m5-4.jpg" alt="Upliance carousel 5 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Dcfu5mED5fu/" target="_blank" rel="noopener" data-n="5"><img src="assets/upliance-carousels/m6-1.jpg" alt="Upliance carousel 6 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m6-2.jpg" alt="Upliance carousel 6 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m6-3.jpg" alt="Upliance carousel 6 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m6-4.jpg" alt="Upliance carousel 6 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m6-5.jpg" alt="Upliance carousel 6 — slide 5" loading="lazy"><span class="mini-badge">1 / 5</span></a><a class="mini-card" href="https://www.instagram.com/p/DcdiO3zDzll/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m7-1.jpg" alt="Upliance carousel 7 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m7-2.jpg" alt="Upliance carousel 7 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m7-3.jpg" alt="Upliance carousel 7 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m7-4.jpg" alt="Upliance carousel 7 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/DdfpH6ij1Dg/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m8-1.jpg" alt="Upliance carousel 8 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m8-2.jpg" alt="Upliance carousel 8 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m8-3.jpg" alt="Upliance carousel 8 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m8-4.jpg" alt="Upliance carousel 8 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Dc_LZKhj6hO/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m5-1.jpg" alt="Upliance carousel 5 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m5-2.jpg" alt="Upliance carousel 5 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m5-3.jpg" alt="Upliance carousel 5 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m5-4.jpg" alt="Upliance carousel 5 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Dcfu5mED5fu/" target="_blank" rel="noopener" data-n="5"><img src="assets/upliance-carousels/m6-1.jpg" alt="Upliance carousel 6 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m6-2.jpg" alt="Upliance carousel 6 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m6-3.jpg" alt="Upliance carousel 6 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m6-4.jpg" alt="Upliance carousel 6 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m6-5.jpg" alt="Upliance carousel 6 — slide 5" loading="lazy"><span class="mini-badge">1 / 5</span></a><a class="mini-card" href="https://www.instagram.com/p/DcdiO3zDzll/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m7-1.jpg" alt="Upliance carousel 7 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m7-2.jpg" alt="Upliance carousel 7 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m7-3.jpg" alt="Upliance carousel 7 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m7-4.jpg" alt="Upliance carousel 7 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/DdfpH6ij1Dg/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m8-1.jpg" alt="Upliance carousel 8 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m8-2.jpg" alt="Upliance carousel 8 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m8-3.jpg" alt="Upliance carousel 8 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m8-4.jpg" alt="Upliance carousel 8 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Dc_LZKhj6hO/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m5-1.jpg" alt="Upliance carousel 5 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m5-2.jpg" alt="Upliance carousel 5 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m5-3.jpg" alt="Upliance carousel 5 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m5-4.jpg" alt="Upliance carousel 5 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Dcfu5mED5fu/" target="_blank" rel="noopener" data-n="5"><img src="assets/upliance-carousels/m6-1.jpg" alt="Upliance carousel 6 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m6-2.jpg" alt="Upliance carousel 6 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m6-3.jpg" alt="Upliance carousel 6 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m6-4.jpg" alt="Upliance carousel 6 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m6-5.jpg" alt="Upliance carousel 6 — slide 5" loading="lazy"><span class="mini-badge">1 / 5</span></a><a class="mini-card" href="https://www.instagram.com/p/DcdiO3zDzll/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m7-1.jpg" alt="Upliance carousel 7 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m7-2.jpg" alt="Upliance carousel 7 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m7-3.jpg" alt="Upliance carousel 7 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m7-4.jpg" alt="Upliance carousel 7 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/DdfpH6ij1Dg/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m8-1.jpg" alt="Upliance carousel 8 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m8-2.jpg" alt="Upliance carousel 8 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m8-3.jpg" alt="Upliance carousel 8 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m8-4.jpg" alt="Upliance carousel 8 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Dc_LZKhj6hO/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m5-1.jpg" alt="Upliance carousel 5 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m5-2.jpg" alt="Upliance carousel 5 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m5-3.jpg" alt="Upliance carousel 5 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m5-4.jpg" alt="Upliance carousel 5 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/Dcfu5mED5fu/" target="_blank" rel="noopener" data-n="5"><img src="assets/upliance-carousels/m6-1.jpg" alt="Upliance carousel 6 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m6-2.jpg" alt="Upliance carousel 6 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m6-3.jpg" alt="Upliance carousel 6 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m6-4.jpg" alt="Upliance carousel 6 — slide 4" loading="lazy"><img src="assets/upliance-carousels/m6-5.jpg" alt="Upliance carousel 6 — slide 5" loading="lazy"><span class="mini-badge">1 / 5</span></a><a class="mini-card" href="https://www.instagram.com/p/DcdiO3zDzll/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m7-1.jpg" alt="Upliance carousel 7 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m7-2.jpg" alt="Upliance carousel 7 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m7-3.jpg" alt="Upliance carousel 7 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m7-4.jpg" alt="Upliance carousel 7 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a><a class="mini-card" href="https://www.instagram.com/p/DdfpH6ij1Dg/" target="_blank" rel="noopener" data-n="4"><img src="assets/upliance-carousels/m8-1.jpg" alt="Upliance carousel 8 — slide 1" loading="lazy" class=on><img src="assets/upliance-carousels/m8-2.jpg" alt="Upliance carousel 8 — slide 2" loading="lazy"><img src="assets/upliance-carousels/m8-3.jpg" alt="Upliance carousel 8 — slide 3" loading="lazy"><img src="assets/upliance-carousels/m8-4.jpg" alt="Upliance carousel 8 — slide 4" loading="lazy"><span class="mini-badge">1 / 4</span></a></div></div></div>
+        </div>
+      </section>
       </div>
 
-      <div class="account-grid">
-        <article class="account-card">
-          <div class="account-top">
-            <div class="avatar">HP</div>
-            <div class="handle">@happypet.app<small>Pet parenting / social content</small></div>
-            <div class="ig-badge">INSTAGRAM</div>
-          </div>
-          <div class="preview ig-screenshot"><img src="assets/instagram/happypet-screenshot.png" alt="Happy Pet Instagram profile screenshot"></div>
-          <div class="account-copy">
-            <h3>Happy Pet 🐶</h3>
-            <p>Playful pet-first storytelling, app-led communication, community content and visually engaging posts designed to make pet parenting feel easier and more fun.</p>
-            <div class="workflow">
-              <div class="workflow-step"><h5>Strategy</h5><p>Marketing planning · Social strategy · Content planning</p></div>
-              <div class="workflow-step"><h5>Social Media</h5><p>IG management · Reels · Community · Content calendars</p></div>
-              <div class="workflow-step"><h5>Performance</h5><p>Meta &amp; Google Ads · Ad creatives · Targeting</p></div>
-              <div class="workflow-step"><h5>Content</h5><p>Social posts · Scripts · Pet-focused content</p></div>
-              <div class="workflow-step"><h5>AI Video</h5><p>AI concepts · AI visuals · Short-form ads</p></div>
-              <div class="workflow-step"><h5>Production</h5><p>Product shoots · Lifestyle content · Shoot concepts</p></div>
-              <div class="workflow-step"><h5>Campaigns</h5><p>Valentine's Day · App promotion · Engagement</p></div>
-            </div>
-            <a class="account-link" href="https://www.instagram.com/happypet.app/" target="_blank">View Instagram ↗</a>
-          </div>
-        </article>
-
-        <article class="account-card">
-          <div class="account-top">
-            <div class="avatar">UP</div>
-            <div class="handle">@upliance.ai<small>Smart cooking / consumer tech</small></div>
-            <div class="ig-badge">INSTAGRAM</div>
-          </div>
-          <div class="preview ig-screenshot"><img src="assets/instagram/upliance-screenshot.png" alt="Upliance.ai Instagram profile screenshot"></div>
-          <div class="account-copy">
-            <h3>Upliance.ai 🍳</h3>
-            <p>Product-led storytelling, air-fryer and smart-kitchen creatives, anime-style concepts, editorial product visuals, carousels and social copy.</p>
-            <div class="workflow">
-              <div class="workflow-step"><h5>Strategy</h5><p>Product marketing · Feature comms · Brand storytelling</p></div>
-              <div class="workflow-step"><h5>Social Media</h5><p>IG management · Reels · LinkedIn · YouTube</p></div>
-              <div class="workflow-step"><h5>Performance</h5><p>Ad concepts · Performance creatives · Conversion copy</p></div>
-              <div class="workflow-step"><h5>Content</h5><p>Product storytelling · Launches · Carousels</p></div>
-              <div class="workflow-step"><h5>AI Video</h5><p>Product videos · Cinematic storytelling · Storyboarding</p></div>
-              <div class="workflow-step"><h5>Production</h5><p>AI product photography · Lifestyle shoots · Art direction</p></div>
-              <div class="workflow-step"><h5>Tools</h5><p>Higgsfield · Kling Turbo · Seedance 2.0 · Omni Flash 1.1</p></div>
-            </div>
-            <a class="account-link" href="https://www.instagram.com/upliance.ai/" target="_blank">View Instagram ↗</a>
-          </div>
-        </article>
-      </div>
-
-      <div class="social-note">
-        <b>Visual proof:</b> the panels above pull live profile data and post imagery directly from Instagram (avatar, follower counts and recent posts) as of the date this portfolio was last updated. Numbers change over time — visit the profiles directly for current stats.
-      </div>
-
-      <div class="section-visual"><img src="assets/visuals/social-channels.jpg" alt="3D illustration representing social channels"></div>
-
-      <div class="cap-block">
-        <div class="cap-block-head"><h3>Channel management</h3><span>Platform-native, end to end</span></div>
-        <div class="cap-grid">
-          <div class="cap-item"><h4>Instagram</h4>
-            <div class="flow"><span class="flow-step">Strategy</span><span class="flow-arrow">→</span><span class="flow-step">Reels</span><span class="flow-arrow">→</span><span class="flow-step">Stories</span><span class="flow-arrow">→</span><span class="flow-step">Carousels</span><span class="flow-arrow">→</span><span class="flow-step">Community</span></div>
-          </div>
-          <div class="cap-item"><h4>LinkedIn</h4>
-            <div class="flow"><span class="flow-step">Strategy</span><span class="flow-arrow">→</span><span class="flow-step">Storytelling</span><span class="flow-arrow">→</span><span class="flow-step">Thought Leadership</span><span class="flow-arrow">→</span><span class="flow-step">Updates</span></div>
-          </div>
-          <div class="cap-item"><h4>YouTube</h4>
-            <div class="flow"><span class="flow-step">Concepts</span><span class="flow-arrow">→</span><span class="flow-step">Shorts</span><span class="flow-arrow">→</span><span class="flow-step">Long-form</span><span class="flow-arrow">→</span><span class="flow-step">Thumbnails</span></div>
+      <section class="sky-bottom">
+        <div class="wrap">
+          <div class="bottom-card">
+            <span class="section-kicker">BEYOND THE CLOUDS</span>
+            <h2>Creative thinking.<br><span>Real execution.</span></h2>
+            <p>
+              From social campaigns and product storytelling to anime-inspired AI videos
+              and premium editorial visuals, I work across the full creative journey —
+              from the first idea to the final post.
+            </p>
+            <a class="btn primary" href="#contact" onclick="showHome()">Let's create something ↗</a>
           </div>
         </div>
-      </div>
-
-      <div class="detail-grid">
-        <div class="detail-card">
-          <h3>Content Planning</h3>
-          <p>Content buckets, recurring series, campaign themes, carousel structures and short-form video ideas.</p>
-        </div>
-        <div class="detail-card">
-          <h3>Caption & SEO Copy</h3>
-          <p>Minimal or long-form captions, relevant keywords, natural discoverability and tone-matched brand copy.</p>
-        </div>
-        <div class="detail-card">
-          <h3>Creative Consistency</h3>
-          <p>Keeping typography, product treatment, color balance, visual tone and messaging aligned across posts.</p>
-        </div>
-      </div>
-      <div class="work">
-        <h3>Content formats I work with</h3>
-        <div class="work-list">
-          <div class="work-item">Instagram carousel slides with editorial photography, product focus and customer-story narratives.</div>
-          <div class="work-item">Anime-style cooking videos and keyword-rich descriptions designed for discovery without over-explaining the product.</div>
-          <div class="work-item">Product-focused social creatives where the product remains accurate while the surrounding creative changes.</div>
-          <div class="work-item">Customer-story framing, testimonials and decision-making narratives that turn product features into relatable content.</div>
-        </div>
-      </div>
+      </section>
     </div>
-  </section>
 
-  <!-- AI VIDEO -->
-  <section class="detail-page" id="ai-video">
-    <div class="wrap">
-      <button class="back" onclick="showHome()">← Back to portfolio</button>
-      <div class="detail-hero">
-        <div class="section-kicker">03 / AI Video Generation</div>
-        <h1>AI video ideas with <span class="gradient">story, art direction and brand purpose.</span></h1>
-        <p>
-          My AI video workflow starts with the idea, not the tool. I define the visual world, scene progression, camera feeling, product role, pacing and prompt language so the output feels intentional rather than random.
-        </p>
-      </div>
+    <section class="section" id="featured-build">
+      <div class="wrap">
+        <div class="section-kicker">FEATURED BUILD</div>
+        <h2>A product I built, <span class="gradient">not just a client project.</span></h2>
+        <div class="built-embed">
+          <iframe src="https://ai-lens.website" title="LensAI — AI food photography for restaurants, built by Akash" loading="lazy"></iframe>
+          <div class="built-embed-copy">
+            <h4>LensAI</h4>
+            <p>AI food photography for restaurants — upload a phone photo or just type the dish name and get studio-quality images that drive orders on Zomato, Swiggy and your own menu. End to end: concept, product, prompting pipeline and this landing page — built by me.</p>
+            <a class="tool-chip" href="https://ai-lens.website" target="_blank" rel="noopener noreferrer">Visit ai-lens.website ↗</a>
+          </div>
+        </div>
 
-      <div class="detail-grid">
-        <div class="detail-card">
-          <h3>Concept Development</h3>
-          <p>Hooks, scenes, narrative arcs, stylized worlds and product integration that fits naturally into the story.</p>
+        <div class="built-embed">
+          <div class="built-embed-shot"><img src="assets/visuals/higgsfield-photoshoot-studio.jpg" alt="Product Photoshoot Studio — Higgsfield app built by Akash, showing product-consistent AI photoshoot generations"></div>
+          <div class="built-embed-copy">
+            <span class="tool-chip built-embed-tag">Higgsfield App</span>
+            <h4>Product Photoshoot Studio</h4>
+            <p>An app I built on Higgsfield that generates on-brand product photography from a simple text prompt while keeping the exact product consistent across every shot — no drift, no manual compositing.</p>
+            <a class="tool-chip" href="https://higgsfield.ai/supercomputer/apps/c07d202e-2c99-4087-a5d2-3943468d13f4/view" target="_blank" rel="noopener noreferrer">Open Product Photoshoot Studio ↗</a>
+          </div>
         </div>
-        <div class="detail-card">
-          <h3>Prompt Direction</h3>
-          <p>Detailed visual prompts covering light, palette, composition, realism level, mood, camera and consistency.</p>
-        </div>
-        <div class="detail-card">
-          <h3>Creative Styles</h3>
-          <p>Anime-inspired cooking videos, cinematic product moments, realistic editorial frames and illustrative storytelling.</p>
-        </div>
-      </div>
 
-      <div class="cap-block">
-        <div class="cap-block-head"><h3>AI production flow</h3><span>Idea to final cut</span></div>
-        <div class="flow">
-          <span class="flow-step">Concept</span><span class="flow-arrow">→</span>
-          <span class="flow-step">Prompt</span><span class="flow-arrow">→</span>
-          <span class="flow-step">Generate</span><span class="flow-arrow">→</span>
-          <span class="flow-step">Edit</span><span class="flow-arrow">→</span>
-          <span class="flow-step">Publish</span>
-        </div>
-        <div class="tool-row">
-          <span class="tool-chip">Higgsfield</span><span class="tool-chip">Kling Turbo</span><span class="tool-chip">Seedance 2.0</span><span class="tool-chip">Omni Flash 1.1</span>
+        <div class="li-badge-wrap">
+          <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="dark" data-type="VERTICAL" data-vanity="akash-vaidyanathan-306112255" data-version="v1">
+            <a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/akash-vaidyanathan-306112255?trk=profile-badge">Akash Vaidyanathan</a>
+          </div>
         </div>
       </div>
+    </section>
+    <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 
-      <div class="cap-block">
-        <div class="cap-block-head"><h3>Certification</h3><span>Higgsfield Academy</span></div>
-        <div class="cert-card">
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-kicker">About</div>
+        <h2>Creative thinking with execution in mind.</h2>
+        <div class="about-grid">
+          <div class="card">
+            <h3>My approach</h3>
+            <p>
+              I work at the intersection of content, branding, social media and AI-assisted creative production. My focus is not just making something visually attractive — it is making the idea clear, platform-native, memorable and useful for the brand.
+            </p>
+            <div class="chips">
+              <span class="chip">Campaign Concepts</span>
+              <span class="chip">Instagram Carousels</span>
+              <span class="chip">AI Visual Direction</span>
+              <span class="chip">Video Concepts</span>
+              <span class="chip">Prompt Design</span>
+              <span class="chip">Caption Writing</span>
+              <span class="chip">Product Storytelling</span>
+              <span class="chip">Brand Consistency</span>
+            </div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>4</b><span>Core service areas</span></div>
+            <div class="stat"><b>AI +</b><span>Creative production workflow</span></div>
+            <div class="stat"><b>Social</b><span>Platform-first mindset</span></div>
+            <div class="stat"><b>Brand</b><span>Consistent visual thinking</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="certification">
+      <div class="wrap">
+        <div class="section-kicker">Certification</div>
+        <h2>Verified credential.</h2>
+        <div class="cert-card" style="max-width:720px">
           <img class="cert-image" src="assets/HFA-2026-O7Z5BYIGFNBE-upscaled.png" alt="Certificate of Completion — The AI Filmmaking Pipeline, Cinema Studio Pro Guide, Higgsfield Academy, awarded to Akash V" loading="lazy">
           <div class="cert-meta">
             <span><b>Credential ID</b>HFA-2026-O7Z5BYIGFNBE</span>
@@ -2402,126 +2707,33 @@
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="video-showcase">
-        <div class="video-showcase-head">
-          <h3>AI video work</h3>
-          <p>Generated films across product storytelling, cinematic worlds and experimental motion.</p>
-        </div>
-        <div class="creative-look-grid">
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/b2.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>B2</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/c3.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>C3</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/cinematic-slow-motion.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Cinematic study</span><h4>Slow Motion</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/krishna-janmashtami-2.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Mythological story</span><h4>Krishna Janmashtami</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/lcf-creation.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Creative direction</span><h4>LCF Creation</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/air-fryer-6l.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Product film</span><h4>Air Fryer 6L</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/processor-chip.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Product detail</span><h4>Processor Chip</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/raki-explainer.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Explainer</span><h4>Raki</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/recipe-reel.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Food story</span><h4>Recipe Reel</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/spiderman-creative.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Character film</span><h4>Spider-Man</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/before-and-after.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Transformation</span><h4>Before &amp; After</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/download.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Visual Experiment</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/festival-personalised.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Festival creative</span><h4>Personalised Festival</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/glass-lid.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Product detail</span><h4>Glass Lid</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/hf-20260807.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study I</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/hf-20260811.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study II</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/news.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>News visual</span><h4>News</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/trika.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Trika</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/hf-20260803.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study III</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/hf-20260804.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study IV</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/hf-20260915.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study V</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/hf-20260723.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study VI</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/hf-20260924.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>AI film</span><h4>Creative Study VII</h4></div></article>
-          <article class="video-piece"><video controls preload="auto"><source src="assets/ai-video/creative/boxing.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Sports film</span><h4>Boxing</h4></div></article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTENT -->
-  <section class="detail-page" id="content">
-    <div class="wrap">
-      <button class="back" onclick="showHome()">← Back to portfolio</button>
-      <div class="detail-hero">
-        <div class="section-kicker">04 / Content Creation</div>
-        <h1>Content that turns a product into <span class="gradient">a story people remember.</span></h1>
-        <p>
-          I create and direct content for social, brand and campaign use — from a single visual to a multi-slide narrative. I pay close attention to composition, product accuracy, color palette, copy hierarchy and the emotion of the final frame.
-        </p>
-      </div>
-
-      <div class="section-visual"><img src="assets/visuals/production.jpg" alt="3D illustration representing shoot and production"></div>
-
-      <div class="detail-grid">
-        <div class="detail-card">
-          <h3>Visual Content</h3>
-          <p>Editorial product images, campaign visuals, social post concepts, stylized illustrations and carousel art direction.</p>
-        </div>
-        <div class="detail-card">
-          <h3>Copy</h3>
-          <p>Hooks, captions, slide copy, testimonials, response messages, promotional copy and short-form brand writing.</p>
-        </div>
-        <div class="detail-card">
-          <h3>Brand Systems</h3>
-          <p>Reusable palettes, visual rules, content templates and creative consistency across different content formats.</p>
+    <section class="section" id="contact">
+      <div class="wrap">
+        <div class="contact">
+          <h3>Have a campaign, product or content idea?</h3>
+          <p>Write to me at vrakash006@gmail.com or connect on LinkedIn — I reply to every message.</p>
+          <div class="cta-row">
+            <a class="btn" style="background:#0b0b0b;color:white;border-color:#0b0b0b" href="mailto:vrakash006@gmail.com">vrakash006@gmail.com</a>
+            <a class="btn" style="background:transparent;color:#0b0b0b;border-color:#8f8f89" href="https://www.linkedin.com/in/akash-vaidyanathan-306112255/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          </div>
         </div>
       </div>
 
-      <div class="cap-block">
-        <div class="cap-block-head"><h3>Shoot &amp; production</h3><span>What separates it from digital-only work</span></div>
-        <div class="flow">
-          <span class="flow-step">Shoot</span><span class="flow-arrow">→</span>
-          <span class="flow-step">Production</span><span class="flow-arrow">→</span>
-          <span class="flow-step">Post</span><span class="flow-arrow">→</span>
-          <span class="flow-step">AI Production</span>
+        <div class="contact-links">
+          <a href="mailto:vrakash006@gmail.com">vrakash006@gmail.com</a>
+          <a href="https://www.linkedin.com/in/akash-vaidyanathan-306112255/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
         </div>
-        <div class="tool-row">
-          <span class="tool-chip">Product Shoots</span><span class="tool-chip">Lifestyle Photography</span><span class="tool-chip">Art Direction</span><span class="tool-chip">Retouching</span><span class="tool-chip">Color Correction</span>
-        </div>
-      </div>
+        </section>
 
-      <div class="video-showcase">
-        <div class="video-showcase-head">
-          <h3>Behind the scenes</h3>
-          <p>Shoots, setups and the process behind the final content.</p>
-        </div>
-        <div class="creative-look-grid">
-          <article class="video-piece"><video controls preload="metadata"><source src="assets/content-bts/bts-process.mp4" type="video/mp4"></video><div class="video-piece-copy"><span>Process</span><h4>On Set</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-01.jpg" alt="Behind the scenes — event booth"><div class="video-piece-copy"><span>BTS</span><h4>Booth Setup</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-02.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>On Location</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-03.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Shoot Day</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-04.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Production</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-05.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Setup</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-06.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>On Set</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-07.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Direction</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-08.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Frame Check</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-09.jpg" alt="Behind the scenes — video shoot with green screen"><div class="video-piece-copy"><span>BTS</span><h4>Studio Shoot</h4></div></article>
-          <article class="video-piece"><img src="assets/content-bts/bts-10.jpg" alt="Behind the scenes"><div class="video-piece-copy"><span>BTS</span><h4>Creative Session</h4></div></article>
-        </div>
-      </div>
-
-      <div class="cap-block">
-        <div class="cap-block-head"><h3>E-commerce</h3><span>Shopify &amp; product pages</span></div>
-        <div class="tool-row">
-          <span class="tool-chip">Shopify</span><span class="tool-chip">Product Pages</span><span class="tool-chip">Product Launches</span><span class="tool-chip">Conversion Optimization</span><span class="tool-chip">Customer Journey</span>
-        </div>
-      </div>
-
-      <div class="work">
-        <h3>Visual language I have worked with</h3>
-        <div class="work-list">
-          <div class="work-item">Premium editorial cookbook-style imagery with black, beige, orange and purple brand accents.</div>
-          <div class="work-item">Minimal graphic concepts designed for clean reproduction and simplified visual forms.</div>
-          <div class="work-item">Product-focused social creatives where one object is replaced without disturbing the rest of the scene.</div>
-          <div class="work-item">Story-led carousel content built around real customer motivations, decision-making and product experience.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+    <footer>
+      <div class="wrap">© 2026 Akash. Creative marketing portfolio.</div>
+    </footer>
+  </main>
 
   <script>
-    const pages = ['marketing','social','ai-video','content'];
+    const pages = ['social','ai-video','content','marketing'];
 
     // Autoplay only the videos currently in view, muted+looping, and pause
     // the rest — keeps every clip visible without decoding all 21 at once.
@@ -2601,25 +2813,194 @@
       }
     }
 
+
+
+    // Moving media reel at the top of every chapter preview (6 items, seamless loop).
+    const reelData = {
+      'social': [['image','assets/instagram/happypet-post1.jpg','Happy Pet'],['image','assets/instagram/upliance-post1.jpg','Upliance'],['image','assets/instagram/happypet-post2.jpg','Happy Pet'],['image','assets/instagram/upliance-post2.jpg','Upliance'],['image','assets/instagram/happypet-post3.jpg','Happy Pet'],['image','assets/instagram/upliance-post3.jpg','Upliance']],
+      'marketing': [['video','assets/reels/chicken-fry.mp4','Campaign reel'],['video','assets/reels/maggi.mp4','Product reel'],['image','assets/instagram/happypet-post1.jpg','Campaign'],['image','assets/visuals/higgsfield-photoshoot-studio.jpg','Product shoot'],['image','assets/instagram/upliance-post1.jpg','Product story'],['image','assets/instagram/happypet-post2.jpg','Campaign'],['image','assets/instagram/upliance-post2.jpg','Launch'],['image','assets/instagram/happypet-post3.jpg','Engagement']],
+      'content': [['video','assets/reels/maggi.mp4','Recipe reel'],['video','assets/reels/chicken-fry.mp4','Recipe reel'],['video','assets/reels/chicken-bts.mp4','Behind the scenes'],['image','assets/content-bts/bts-01.jpg','BTS'],['image','assets/content-bts/bts-02.jpg','BTS'],['image','assets/content-bts/bts-03.jpg','BTS'],['image','assets/content-bts/bts-04.jpg','BTS'],['image','assets/content-bts/bts-05.jpg','BTS'],['image','assets/content-bts/bts-06.jpg','BTS']]
+    };
+    Object.keys(reelData).forEach((id, idx) => {
+      const ch = document.getElementById(id);
+      const hero = ch && ch.querySelector('.detail-hero');
+      if (!hero) return;
+      const item = ([type, src, label], clone) => type === 'video'
+        ? `<div class="reel-item"><video muted loop playsinline preload="${clone ? 'none' : 'metadata'}" src="${src}"></video><span>${label}</span></div>`
+        : `<div class="reel-item"><img src="${src}" alt="${label}" loading="lazy"><span>${label}</span></div>`;
+      const html = reelData[id].map(d => item(d, false)).join('') + reelData[id].map(d => item(d, true)).join('');
+      const reel = document.createElement('div');
+      reel.className = 'reel' + (idx % 2 ? ' rev' : '');
+      reel.innerHTML = '<div class="reel-track">' + html + '</div>';
+      const vr = ch.querySelector('.vreel');
+      (vr || hero).insertAdjacentElement('afterend', reel);
+      reel.querySelectorAll('video').forEach(v => { v.muted = true; videoAutoplayObserver.observe(v); });
+    });
+
+    // 2-column vertical reels: Social = the pages handled + their content, AI Video = films.
+    const vreelData = {
+      'social': [
+        { head:{img:'assets/instagram/happypet-avatar.jpg', name:'@happypet.app', sub:'Pet parenting / social content', href:'https://www.instagram.com/happypet.app/'}, shot:'assets/instagram/happypet-screenshot.png' },
+        { head:{img:'assets/instagram/upliance-avatar.jpg', name:'@upliance.ai', sub:'Smart cooking / consumer tech', href:'https://www.instagram.com/upliance.ai/'}, shot:'assets/instagram/upliance-screenshot.png' }
+      ],
+      'ai-video': [
+        { items:[['video','assets/ai-video/creative/c3.mp4'],['video','assets/ai-video/creative/hf-20260804.mp4'],['video','assets/ai-video/creative/glass-lid.mp4'],['video','assets/ai-video/creative/hf-20260924.mp4']] },
+        { items:[['video','assets/ai-video/creative/hf-20260807.mp4'],['video','assets/ai-video/creative/boxing.mp4'],['video','assets/ai-video/creative/hf-20260803.mp4'],['video','assets/ai-video/creative/trika.mp4']] },
+        { items:[['video','assets/ai-video/creative/hf-20260915.mp4'],['video','assets/ai-video/creative/b2.mp4'],['video','assets/ai-video/creative/hf-20260811.mp4'],['video','assets/ai-video/creative/news.mp4']] },
+        { items:[['video','assets/ai-video/creative/cinematic-slow-motion.mp4'],['video','assets/ai-video/creative/krishna-janmashtami-2.mp4'],['video','assets/ai-video/creative/hf-20260723.mp4'],['video','assets/ai-video/creative/recipe-reel.mp4']] }
+      ]
+    };
+    Object.keys(vreelData).forEach((id) => {
+      const ch = document.getElementById(id);
+      const hero = ch && ch.querySelector('.detail-hero');
+      if (!hero) return;
+      const tile = ([type, src], clone) => type === 'video'
+        ? `<video muted loop playsinline preload="${clone ? 'none' : 'metadata'}" src="${src}"></video>`
+        : `<img src="${src}" alt="" loading="lazy">`;
+      const wrap = document.createElement('div');
+      wrap.className = 'vreel reel' + (id === 'ai-video' ? ' four' : '');
+      wrap.innerHTML = vreelData[id].map((col, i) => {
+        const head = col.head ? `<div class="vcol-head"><img src="${col.head.img}" alt=""><div><b>${col.head.name}</b><small>${col.head.sub}</small></div><a href="${col.head.href}" target="_blank" rel="noopener">Instagram ↗</a></div>` : '';
+        if (col.shot) return `<div class="vcol">${head}<a class="vcol-shot" href="${col.head.href}" target="_blank" rel="noopener"><img src="${col.shot}" alt="${col.head.name} Instagram profile" loading="lazy"></a></div>`;
+        const tiles = col.items.map(t => tile(t, false)).join('') + col.items.map(t => tile(t, true)).join('');
+        return `<div class="vcol${i % 2 ? ' rev' : ''}">${head}<div class="vcol-window"><div class="vcol-track">${tiles}</div></div></div>`;
+      }).join('');
+      hero.insertAdjacentElement('afterend', wrap);
+      wrap.querySelectorAll('video').forEach(v => { v.muted = true; videoAutoplayObserver.observe(v); });
+    });
+    const setPreviewHeights = () => document.querySelectorAll('.chapter.collapsed').forEach(ch => {
+      const reel = ch.querySelector('.reel');
+      if (!reel) return;
+      const ig = ch.querySelector('.ig-reels');
+      const chTop = ch.getBoundingClientRect().top, rBottom = reel.getBoundingClientRect().bottom;
+      const pad = ig ? ig.getBoundingClientRect().bottom - rBottom + 60 : 120;
+      ch.style.setProperty('--preview-h', Math.round(rBottom - chTop + Math.max(pad, 120)) + 'px');
+    });
+    window.addEventListener('load', () => { setPreviewHeights(); setTimeout(setPreviewHeights, 600); });
+    window.addEventListener('resize', setPreviewHeights);
+    setPreviewHeights();
+
+
+    // Upliance carousels: swipe/arrows, dots and counter.
+    document.querySelectorAll('.cs-card').forEach((card) => {
+      const track = card.querySelector('.cs-track');
+      const slides = track.children.length;
+      const prev = card.querySelector('.prev'), next = card.querySelector('.next');
+      const dots = card.querySelectorAll('.cs-dots i'), count = card.querySelector('.cs-count');
+      const index = () => Math.round(track.scrollLeft / track.clientWidth);
+      const update = () => {
+        const i = Math.min(slides - 1, Math.max(0, index()));
+        dots.forEach((d, k) => d.classList.toggle('on', k === i));
+        count.textContent = (i + 1) + ' / ' + slides;
+        prev.disabled = i === 0; next.disabled = i === slides - 1;
+      };
+      const go = (i) => track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+      prev.addEventListener('click', () => go(index() - 1));
+      next.addEventListener('click', () => go(index() + 1));
+      dots.forEach((d, k) => d.addEventListener('click', () => go(k)));
+      track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+      update();
+    });
+
+
+    // Mini carousel rows: each card flips through its slides on its own.
+    document.querySelectorAll('.mini-card').forEach((card, ci) => {
+      const imgs = card.querySelectorAll('img'), badge = card.querySelector('.mini-badge');
+      if (imgs.length < 2) return;
+      let i = 0;
+      setInterval(() => {
+        imgs[i].classList.remove('on');
+        i = (i + 1) % imgs.length;
+        imgs[i].classList.add('on');
+        badge.textContent = (i + 1) + ' / ' + imgs.length;
+      }, 2200 + (ci % 4) * 350);
+    });
+
+    // Each chapter starts as a one-screen preview; "Show more" opens the rest.
+    document.querySelectorAll('.chapter').forEach((ch) => {
+      ch.classList.add('collapsed');
+      const name = ch.dataset.name;
+      const more = document.createElement('div');
+      more.className = 'chapter-more';
+      more.innerHTML = '<button type="button">Show more · ' + name + ' <b>↓</b></button>';
+      ch.appendChild(more);
+      const less = document.createElement('div');
+      less.className = 'chapter-less';
+      less.innerHTML = '<button type="button">Show less ↑</button>';
+      ch.querySelector(':scope > .wrap').appendChild(less);
+
+      more.querySelector('button').addEventListener('click', () => {
+        ch.classList.add('expanding');
+        ch.style.maxHeight = ch.offsetHeight + 'px';
+        ch.classList.remove('collapsed');
+        requestAnimationFrame(() => { ch.style.maxHeight = ch.scrollHeight + 'px'; });
+        setTimeout(() => { ch.style.maxHeight = ''; ch.classList.remove('expanding'); creativeGrids.forEach(packCreativeGrid); }, 950);
+      });
+      less.querySelector('button').addEventListener('click', () => {
+        ch.style.maxHeight = ch.offsetHeight + 'px';
+        ch.classList.add('collapsed');
+        requestAnimationFrame(() => { ch.style.maxHeight = ''; });
+        ch.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
     function openService(id){
-      document.body.classList.add('detail-open');
-      document.getElementById('homePage').classList.add('hidden');
-      pages.forEach(p => document.getElementById(p).classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      window.scrollTo({top:0,behavior:'smooth'});
-      history.replaceState(null,'','#'+id);
-      if ((id === 'ai-video' || id === 'content') && creativeGrids) {
-        document.getElementById(id).querySelectorAll('.creative-look-grid').forEach(packCreativeGrid);
-      }
+      const el = document.getElementById(id);
+      if (!el) return;
+      const btn = el.querySelector('.chapter-more button');
+      if (el.classList.contains('collapsed') && btn) btn.click();
+      el.scrollIntoView({behavior:'smooth', block:'start'});
     }
+        document.querySelectorAll('.chapter-rail a, .hero-jump a').forEach(a => a.addEventListener('click', e => { e.preventDefault(); openService((a.dataset.target || a.getAttribute('href').slice(1))); }));
 
     function showHome(){
-      document.body.classList.remove('detail-open');
-      document.getElementById('homePage').classList.remove('hidden');
-      pages.forEach(p => document.getElementById(p).classList.remove('active'));
       window.scrollTo({top:0,behavior:'smooth'});
-      history.replaceState(null,'',window.location.pathname);
     }
+
+    // One-page flow: reveal-on-scroll, chapter rail scrollspy, progress bar, nav theme swap.
+    (function(){
+      const chaptersEl = document.getElementById('work');
+      const rail = document.getElementById('chapterRail');
+      const bar = document.getElementById('scrollProgress');
+      const chapterEls = pages.map(id => document.getElementById(id));
+
+      const revealTargets = [];
+      chapterEls.forEach(ch => {
+        ch.querySelectorAll(':scope > .wrap > *:not(.chapter-bar)').forEach(el => {
+          el.classList.add('reveal'); revealTargets.push(el);
+        });
+      });
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.06, rootMargin: '0px 0px -6% 0px' });
+      revealTargets.forEach(el => io.observe(el));
+
+      let ticking = false;
+      function onScroll(){
+        ticking = false;
+        const y = window.scrollY;
+        const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        bar.style.transform = `scaleX(${Math.min(1, y / max)})`;
+
+        const top = chaptersEl.getBoundingClientRect().top;
+        const bottom = chaptersEl.getBoundingClientRect().bottom;
+        const inside = top <= 60 && bottom > 120;
+        document.body.classList.toggle('detail-open', inside);
+        rail.classList.toggle('show', top < window.innerHeight * 0.5 && bottom > window.innerHeight * 0.5);
+
+        let current = null;
+        chapterEls.forEach(ch => {
+          const r = ch.getBoundingClientRect();
+          ch.style.setProperty('--par', (-r.top * 0.12).toFixed(1));
+          if (r.top <= window.innerHeight * 0.4 && r.bottom > window.innerHeight * 0.4) current = ch.id;
+        });
+        rail.querySelectorAll('a').forEach(a => a.classList.toggle('on', a.dataset.target === current));
+      }
+      window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
+      window.addEventListener('resize', onScroll);
+      window.addEventListener('load', onScroll);
+      onScroll();
+    })();
 
     function animateSky(){
       const y = window.scrollY;
@@ -2646,11 +3027,8 @@
 
     window.addEventListener('load', () => {
       const hash = location.hash.replace('#','');
-      if(pages.includes(hash)) openService(hash);
-      else {
-        document.body.classList.remove('detail-open');
-        animateSky();
-      }
+      if(pages.includes(hash)) setTimeout(() => openService(hash), 150);
+      else animateSky();
     });
   
     const cloudVideo = document.getElementById('cloudVideo');
